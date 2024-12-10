@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zoom Redesign</title>
+    <link rel="stylesheet" href="/public/output.css" />
+    <script src="https://kit.fontawesome.com/e66dce47d1.js" crossorigin="anonymous"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+
+    <style>
+      body, h1, h2, h3, p, a, button {
+        font-family: 'Lora', serif;
+      }
+
+      .hover-arrow::after {
+        content: '';
+        display: inline-block;
+        margin-left: 0.5rem;
+        transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+        border-top: 0.4em solid transparent;
+        border-bottom: 0.4em solid transparent;
+        border-left: 0.4em solid currentColor;
+        opacity: 0;
+      }
+      .hover-arrow:hover::after {
+        transform: translateX(0.5rem);
+        opacity: 1;
+      }
+
+      @media (min-width: 768px) {
+        #menu-button {
+          display: none;
+        }
+        #desktop-menu {
+          display: flex;
+        }
+        .mobile-button {
+          display: none;
+        }
+        .desktop-button {
+          display: inline-block;
+        }
+
+        .hero-content {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .image-section {
+          width: 50%;
+          position: relative;
+          display: flex;
+          justify-content: space-between;
+        }
+        .image-section img {
+          width: 56%;
+          height: auto;
+          margin: 0 10px;
+        }
+      }
+
+      @media (max-width: 767px) {
+        #desktop-menu {
+          display: none;
+        }
+        #menu-button {
+          display: block;
+        }
+        .desktop-button {
+          display: none;
+        }
+        .mobile-button {
+          display: inline-block;
+        }
+
+        .hero-content {
+          display: block;
+          text-align: center;
+        }
+        .image-section {
+          width: 100%;
+          height: auto;
+          margin-top: 20px;
+        }
+        .image-section img {
+          width: 80%;
+          height: auto;
+          margin: 0 auto 20px auto;
+        }
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Navigation -->
+    <header class="bg-white shadow">
+      <div class="container mx-auto px-4 py-6 flex justify-between items-center">
+        <div class="text-3xl font-bold text-blue-600">Zoom</div>
+        <div id="desktop-menu" class="hidden space-x-4">
+          <a href="#" class="text-gray-900 hover:text-blue-600">Products</a>
+          <a href="#" class="text-gray-900 hover:text-blue-600">Lösningar</a>
+          <a href="#" class="text-gray-900 hover:text-blue-600">Resurser</a>
+          <a href="#" class="text-gray-900 hover:text-blue-600">Planer & Priser</a>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button class="desktop-button bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Registrera dig gratis</button>
+          <button class="desktop-button bg-white text-blue-600 px-4 py-2 rounded hover:bg-blue-200">Kontakta Säljavdelningen</button>
+          <button class="mobile-button bg-white text-gray-400 px-4 py-2 rounded">Delta</button>
+          <button class="mobile-button bg-white text-gray-400 px-4 py-2 rounded">Värd</button>
+          <button id="menu-button" class="text-gray-900 focus:outline-none" title="Menu">
+            <i class="fas fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <div id="popup-menu" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+      <div class="bg-white rounded p-4 space-y-4 w-3/4 max-w-sm">
+        <button id="close-menu" class="text-right text-gray-700 hover:text-gray-900">&times;</button>
+        <a href="#" class="block text-lg text-gray-700 hover:text-gray-900">Products</a>
+        <a href="#" class="block text-lg text-gray-700 hover:text-gray-900">Lösningar</a>
+        <a href="#" class="block text-lg text-gray-700 hover:text-gray-900">Resurser</a>
+        <a href="#" class="block text-lg text-gray-700 hover:text-gray-900">Planer & Priser</a>
+        <div class="relative">
+          <label for="popup-mode-switcher" class="block text-lg text-gray-700">Mode Switcher</label>
+          <select id="popup-mode-switcher" class="bg-gray-200 text-gray-900 text-lg rounded px-3 py-2 w-full focus:outline-none">
+            <option value="system">System</option>
+            <option value="light">Light Mode</option>
+            <option value="dark">Dark Mode</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="container mx-auto px-4 py-16 text-center">
+      <div class="hero-content">
+        <div class="text-content">
+          <h1 class="text-5xl font-bold text-gray-900">
+            <p>Hitta allt du behöver</p>
+            <p>när du behöver det</p>
+            <p><span class="text-black">med</span> <span class="text-blue-600">AI Companion</span></p>
+          </h1>
+          <p class="mt-4 text-lg text-gray-600">Få mer gjort med Zoom workplace: En AI-driven</p>
+          <p>arbetsplattform med AI Companion 2.0, som ingår utan</p>
+          <p>Extra kostnad.</p>
+          <div class="mt-8 space-x-4">
+            <button class="px-6 py-3 bg-blue-600 text-white text-lg rounded hover:bg-blue-700">Planer och priser</button>
+            <button class="px-6 py-3 text-blue-600 border-blue-600 hover-arrow">Upptäck Zoom Workplace</button>
+          </div>
+        </div>
+
+        <div class="image-section">
+          <img src="/bilder/bild1.jpg" alt="Image 1" />
+          <img src="/bilder/bild2.webp" alt="Image 2" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="container mx-auto px-4 py-16">
+      <h2 class="text-3xl font-bold text-gray-900 text-center">Tjänster</h2>
+      <div class="mt-8 grid md:grid-cols-2 gap-8">
+        <div class="bg-white p-6 rounded shadow">
+          <h3 class="text-xl font-semibold text-gray-800">HD Video and Audio</h3>
+          <p class="mt-4 text-gray-600">Upplev högupplöst video och ljud för alla dina möten.</p>
+        </div>
+        <div class="bg-white p-6 rounded shadow">
+          <h3 class="text-xl font-semibold text-gray-800">Screen Sharing</h3>
+          <p class="mt-4 text-gray-600">Dela din skärm med lätthet under presentationer och samarbeten.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="bg-blue-600 py-16">
+      <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-white text-center">Redo att komma igång?</h2>
+        <div class="mt-8 grid md:grid-cols-3 gap-8">
+          <div class="bg-white p-6 rounded shadow">
+            <h3 class="text-xl font-semibold text-gray-800">Basic</h3>
+            <p class="mt-4 text-gray-600">0 SEK/month</p>
+            <p class="mt-4 text-gray-600">Free forever with limited features.</p>
+            <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Sign Up</button>
+          </div>
+          <div class="bg-white p-6 rounded shadow">
+            <h3 class="text-xl font-semibold text-gray-800">Pro</h3>
+            <p class="mt-4 text-gray-600">149.99 SEK/month</p>
+            <p class="mt-4 text-gray-600">More features for small teams.</p>
+            <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Sign Up</button>
+          </div>
+          <div class="bg-white p-6 rounded shadow">
+            <h3 class="text-xl font-semibold text-gray-800">Business</h3>
+            <p class="mt-4 text-gray-600">199.99 SEK/month</p>
+            <p class="mt-4 text-gray-600">Advanced features for businesses.</p>
+            <button class="mt-4 bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Sign Up</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div id="app"></div>
+    <script>
+      document.getElementById('menu-button').addEventListener('click', function() {
+        const menuPopup = document.getElementById('popup-menu');
+        menuPopup.classList.toggle('hidden');
+      });
+
+      document.getElementById('close-menu').addEventListener('click', function() {
+        const menuPopup = document.getElementById('popup-menu');
+        menuPopup.classList.add('hidden');
+      });
+
+      document.getElementById('popup-mode-switcher').addEventListener('change', function(e) {
+        const mode = e.target.value;
+        document.documentElement.setAttribute('data-theme', mode);
+        if (mode === 'dark') {
+          document.documentElement.classList.add('dark-mode');
+          document.documentElement.classList.remove('light-mode');
+        } else if (mode === 'light') {
+          document.documentElement.classList.add('light-mode');
+          document.documentElement.classList.remove('dark-mode');
+        } else {
+          document.documentElement.classList.remove('light-mode');
+          document.documentElement.classList.remove('dark-mode');
+        }
+      });
+    </script>
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
